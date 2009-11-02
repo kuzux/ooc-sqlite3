@@ -22,6 +22,8 @@ SqliteStmt: cover from SqliteStmtStruct {
   columnName: extern(sqlite3_column_name) func(Int) -> String
   columnDb: extern(sqlite3_column_database_name) func(Int) -> String
   columnTable: extern(sqlite3_column_table_name) func(Int) -> String
+
+  toString: extern(sqlite3_sql) func -> String
 }
 
 Sqlite3: cover from SqliteStruct {
