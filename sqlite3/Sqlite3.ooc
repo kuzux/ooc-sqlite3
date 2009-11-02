@@ -18,6 +18,10 @@ SqliteStmt: cover from SqliteStmtStruct {
   textColumn: extern(sqlite3_column_text) func(Int) -> String
   blobColumn: extern(sqlite3_column_blob) func(Int) -> Pointer
   doubleColumn: extern(sqlite3_column_blob) func(Int) -> Double
+
+  columnName: extern(sqlite3_column_name) func(Int) -> String
+  columnDb: extern(sqlite3_column_database_name) func(Int) -> String
+  columnTable: extern(sqlite3_column_table_name) func(Int) -> String
 }
 
 Sqlite3: cover from SqliteStruct {
