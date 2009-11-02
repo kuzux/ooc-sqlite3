@@ -1,4 +1,5 @@
 include sqlite3
+import resultcodes
 
 SqliteStruct: cover from sqlite3*
 SqliteStmtStruct: cover from sqlite3_stmt*
