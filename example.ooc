@@ -1,4 +1,5 @@
-import sqlite3/Sqlite3
+use sqlite3
+import Sqlite3
 
 main: func {
   db := Sqlite3 new("asd.db")
