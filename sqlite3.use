@@ -1,5 +1,5 @@
 Name: Sqlite3
 Description: A Small Relational Database
 Pkgs: sqlite3
-SourcePath: sqlite3/
+SourcePath: .
 
