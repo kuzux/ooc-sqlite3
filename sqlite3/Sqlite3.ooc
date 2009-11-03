@@ -23,11 +23,11 @@ SqliteStmt: cover from SqliteStmtStruct {
   bindInt64: extern(sqlite3_bind_int64) func(Int, Int64) -> Int
   bindNull: extern(sqlite3_bind_null) func(Int) -> Int
   bindDouble: extern(sqlite3_bind_double) func(Int, Double) -> Int
-  _bind_text: extern(sqlite3_bind_text) func(Int, String, Int, Pointer) -> Int
+  _bind_text: extern(sqlite3_bind_text) func(Int, String, Int, Func(Pointer)) -> Int
   bindText: func(id: Int, text: String) -> Int {
     return this _bind_text(id, text, -1, -1)
   }
-  _bind_blob: extern(sqlite3_bind_blob) func(Int, Pointer, Int, Pointer) -> Int
+  _bind_blob: extern(sqlite3_bind_blob) func(Int, Pointer, Int, Func(Pointer)) -> Int
   bindBlob: func(id: Int, data: Pointer, size: Int) -> Int {
     return this _bind_blob(id, data, size, -1)
   }
