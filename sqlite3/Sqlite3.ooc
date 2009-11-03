@@ -19,6 +19,19 @@ SqliteStmt: cover from SqliteStmtStruct {
   blobColumn: extern(sqlite3_column_blob) func(Int) -> Pointer
   doubleColumn: extern(sqlite3_column_blob) func(Int) -> Double
 
+  bindInt: extern(sqlite3_bind_int) func(Int, Int) -> Int
+  bindInt64: extern(sqlite3_bind_int64) func(Int, Int64) -> Int
+  bindNull: extern(sqlite3_bind_null) func(Int) -> Int
+  bindDouble: extern(sqlite3_bind_double) func(Int, Double) -> Int
+  _bind_text: extern(sqlite3_bind_text) func(Int, String, Int, Pointer) -> Int
+  bindText: func(id: Int, text: String) -> Int {
+    return this _bind_text(id, text, -1, -1)
+  }
+  _bind_blob: extern(sqlite3_bind_blob) func(Int, Pointer, Int, Pointer) -> Int
+  bindBlob: func(id: Int, data: Pointer, size: Int) -> Int {
+    return this _bind_blob(id, data, size, -1)
+  }
+
   columnName: extern(sqlite3_column_name) func(Int) -> String
   columnDb: extern(sqlite3_column_database_name) func(Int) -> String
   columnTable: extern(sqlite3_column_table_name) func(Int) -> String
@@ -39,7 +52,7 @@ Sqlite3: cover from SqliteStruct {
   errcode: extern(sqlite3_errcode) func -> Int
   errmsg: extern(sqlite3_errmsg) func -> String
 
-  _prepare: extern(sqlite3_prepare_v2) func(String, Int, SqliteStmt*, const Char**) -> Int
+  _prepare: extern(sqlite3_prepare_v2) func(String, Int, SqliteStmt*, const String*) -> Int
   prepare: func(query: String) -> SqliteStmt {
     res : SqliteStmt
     this _prepare(query, -1, res&, null)
