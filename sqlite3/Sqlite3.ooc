@@ -1,4 +1,5 @@
 include sqlite3
+import structs/HashMap
 
 SqliteStruct: cover from sqlite3*
 SqliteStmtStruct: cover from sqlite3_stmt*
@@ -51,14 +52,14 @@ SqliteStmt: cover from SqliteStmtStruct {
   toString: extern(sqlite3_sql) func -> String
 
   toHashMap: func -> HashMap<SqliteValue>{
-    res := HashMap<SqliteValue> new
-    n := this columnCount()+1
-    for(i in 1..n){
+    map := HashMap<SqliteValue> new()
+    n := this columnCount()
+    for(i in 0..n){
       name := this columnName(i)
       val := this valueColumn(i)
-      res put(name, val)
+      map put(name, val)
     }
-    return res
+    return map
   }
 }
 

@@ -1,5 +1,6 @@
 use sqlite3
 import sqlite3/[Sqlite3, ResultCodes]
+import structs/HashMap
 
 main: func {
   db := Sqlite3 new("asd.db")
@@ -7,11 +8,10 @@ main: func {
   stmt toString() println()
   res := stmt step()
   while(res==Sqlite3Code row){
-    stmt columnName(0) println()
-    stmt intColumn(0) toString() println()  
-    stmt columnName(1) println()
-    stmt intColumn(1) toString() println()
-    
+    h := stmt toHashMap()
+    h get("asd") toInt() toString() println()
+    h get("zxc") toInt() toString() println()
+
     res = stmt step()
   }
   stmt finalize()
