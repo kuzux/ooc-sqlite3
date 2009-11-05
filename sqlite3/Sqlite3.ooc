@@ -1,4 +1,5 @@
 include sqlite3
+import ResultCodes
 import structs/HashMap
 
 SqliteStruct: cover from sqlite3*
@@ -17,6 +18,7 @@ SqliteStmt: cover from SqliteStmtStruct {
   step: extern(sqlite3_step) func -> Int
   finalize: extern(sqlite3_finalize) func -> Int
   reset: extern(sqlite3_reset) func -> Int
+
   new: static func -> This {
     this := gc_malloc(This size) as This
     return this
@@ -80,6 +82,18 @@ Sqlite3: cover from SqliteStruct {
   prepare: func(query: String) -> SqliteStmt {
     res : SqliteStmt
     this _prepare(query, -1, res&, null)
+    return res
+  }
+
+  exec: func(query: String, callback: Func(HashMap<SqliteValue>)) -> Int{
+    stmt := this prepare(query)
+    res := stmt step()
+    while(res==Sqlite3Code row){
+      h := stmt toHashMap()
+      callback(h)
+      res = stmt step()
+    }
+    stmt finalize()
     return res
   }
 }
