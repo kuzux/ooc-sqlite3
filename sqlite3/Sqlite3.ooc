@@ -49,6 +49,17 @@ SqliteStmt: cover from SqliteStmtStruct {
   columnTable: extern(sqlite3_column_table_name) func(Int) -> String
 
   toString: extern(sqlite3_sql) func -> String
+
+  toHashMap: func -> HashMap<SqliteValue>{
+    res := HashMap<SqliteValue> new
+    n := this columnCount()+1
+    for(i in 1..n){
+      name := this columnName(i)
+      val := this valueColumn(i)
+      res put(name, val)
+    }
+    return res
+  }
 }
 
 Sqlite3: cover from SqliteStruct {
