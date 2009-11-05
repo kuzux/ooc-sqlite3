@@ -2,6 +2,15 @@ include sqlite3
 
 SqliteStruct: cover from sqlite3*
 SqliteStmtStruct: cover from sqlite3_stmt*
+SqliteValueStruct: cover from sqlite3_value*
+
+SqliteValue: cover from SqliteValueStruct{
+  toInt: extern(sqlite3_value_int) func -> Int
+  toInt64: extern(sqlite3_value_int64) func -> Int64
+  toDouble: extern(sqlite3_value_double) func -> Double
+  toString: extern(sqlite3_value_text) func -> String
+  toBlob: extern(sqlite3_value_blob) func -> Pointer
+}
 
 SqliteStmt: cover from SqliteStmtStruct {
   step: extern(sqlite3_step) func -> Int
