@@ -21,6 +21,7 @@ SqliteStmt: cover from SqliteStmtStruct {
     return this
   }
 
+  columnCount: extern(sqlite3_column_count) func -> Int
   intColumn: extern(sqlite3_column_int) func(Int) -> Int
   int64Column: extern(sqlite3_column_int64) func(Int) -> Int64
   textColumn: extern(sqlite3_column_text) func(Int) -> String
@@ -28,6 +29,7 @@ SqliteStmt: cover from SqliteStmtStruct {
   doubleColumn: extern(sqlite3_column_blob) func(Int) -> Double
   valueColumn: extern(sqlite3_column_value) func(Int) -> SqliteValue
 
+  bindParameterCount: extern(sqlite3_bind_parameter_count) func -> Int
   bindInt: extern(sqlite3_bind_int) func(Int, Int) -> Int
   bindInt64: extern(sqlite3_bind_int64) func(Int, Int64) -> Int
   bindNull: extern(sqlite3_bind_null) func(Int) -> Int
