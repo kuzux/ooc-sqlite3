@@ -26,6 +26,7 @@ SqliteStmt: cover from SqliteStmtStruct {
   textColumn: extern(sqlite3_column_text) func(Int) -> String
   blobColumn: extern(sqlite3_column_blob) func(Int) -> Pointer
   doubleColumn: extern(sqlite3_column_blob) func(Int) -> Double
+  valueColumn: extern(sqlite3_column_value) func(Int) -> SqliteValue
 
   bindInt: extern(sqlite3_bind_int) func(Int, Int) -> Int
   bindInt64: extern(sqlite3_bind_int64) func(Int, Int64) -> Int
@@ -39,6 +40,7 @@ SqliteStmt: cover from SqliteStmtStruct {
   bindBlob: func(id: Int, data: Pointer, size: Int) -> Int {
     return this _bind_blob(id, data, size, -1)
   }
+  bindValue: extern(sqlite3_bind_value) func(Int, SqliteValue) -> Int
 
   columnName: extern(sqlite3_column_name) func(Int) -> String
   columnDb: extern(sqlite3_column_database_name) func(Int) -> String
