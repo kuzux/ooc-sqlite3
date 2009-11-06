@@ -1,5 +1,5 @@
 use sqlite3
-import sqlite3/[Sqlite3, ResultCodes]
+import sqlite3/Sqlite3
 import structs/HashMap
 
 main: func {

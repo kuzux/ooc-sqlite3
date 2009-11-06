@@ -47,6 +47,15 @@ SqliteStmt: cover from SqliteStmtStruct {
   }
   bindValue: extern(sqlite3_bind_value) func(Int, SqliteValue) -> Int
 
+  bind: func<T> (id:Int, val: T) -> Int{
+    match T {
+      case Int => this bindInt(id, val)
+      case Int64 => this bindInt64(id, val)
+      case Double => this bindDouble(id, val)
+      case String => this bindText(id, val)
+    }
+  }
+
   columnName: extern(sqlite3_column_name) func(Int) -> String
   columnDb: extern(sqlite3_column_database_name) func(Int) -> String
   columnTable: extern(sqlite3_column_table_name) func(Int) -> String
